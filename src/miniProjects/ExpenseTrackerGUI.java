@@ -337,6 +337,12 @@ public class ExpenseTrackerGUI extends JFrame {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            // fallback to default look and feel
+        }
+
         SwingUtilities.invokeLater(ExpenseTrackerGUI::new);
     }
 
