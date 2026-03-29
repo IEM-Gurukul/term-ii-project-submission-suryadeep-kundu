@@ -5,26 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseManager {
-    private List<Expense> expenses;
-
-    public ExpenseManager() {
-        expenses = new ArrayList<>();
-    }
+    private List<Expense> expenses = new ArrayList<>();
 
     public void addExpense(Expense expense) {
         expenses.add(expense);
     }
 
     public void removeExpense(int index) {
-        if (index >= 0 && index < expenses.size()) {
+        if (isValidIndex(index)) {
             expenses.remove(index);
         }
     }
 
     public void updateExpense(int index, Expense expense) {
-        if (index >= 0 && index < expenses.size()) {
+        if (isValidIndex(index)) {
             expenses.set(index, expense);
         }
+    }
+
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < expenses.size();
     }
 
     public List<Expense> getExpenses() {
@@ -32,11 +32,9 @@ public class ExpenseManager {
     }
 
     public double getTotalExpenses() {
-        double total = 0;
-        for (Expense expense : expenses) {
-            total += expense.getAmount();
-        }
-        return total;
+        return expenses.stream()
+                .mapToDouble(Expense::getAmount)
+                .sum();
     }
 
     public void saveToFile(String filename) {
