@@ -247,7 +247,38 @@ The application follows a **three-tier architecture pattern**:
 - **Persistence:** Java Serialization (ObjectInputStream/ObjectOutputStream)
 - **Design Patterns:** Model-View-Controller (MVC), Data Access Object (DAO)
 
-////
+### Key Code Implementations
+
+#### Expense Model
+```java
+public class Expense implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private double amount;
+    private String description;
+    // Getters and setters for encapsulation
+}
+```
+
+#### Total Calculation (Functional Programming)
+```java
+public double getTotalExpenses() {
+    return expenses.stream()
+            .mapToDouble(Expense::getAmount)
+            .sum();
+}
+```
+
+#### File Persistence
+```java
+public void saveToFile(String filename) {
+    try (ObjectOutputStream oos = new ObjectOutputStream(
+             new FileOutputStream(filename))) {
+        oos.writeObject(expenses);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+```
 
 #### GUI Styling Features
 - Color schemes for visual appeal (Steel Blue headers, alternating row colors)
